@@ -6,12 +6,23 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
+echo "Starting the process..."
+
 model_id=$1
-username=$(huggingface-cli whoami)  # Ensure you're logged in
+echo "Model ID: $model_id"
+
+# Fetching username for the Hugging Face CLI
+echo "Fetching Hugging Face username..."
+username=$(huggingface-cli whoami)
+
 model_name=$(basename "$model_id")
-# Use download.py to download the model
+echo "Model Name: $model_name"
+
+# Downloading the model using download.py
+echo "Downloading the model..."
 python download.py "$model_id"
 local_dir="${model_id//\//-}"
+echo "Model downloaded to: $local_dir"
 
 # Define quantization methods
 quant_methods=("q4_k_m" "q5_k_m" "q8_0")
@@ -24,11 +35,12 @@ for method in "${quant_methods[@]}"; do
     ./llama.cpp/quantize "$input_file" "$output_file" "$method"
     
     if [ -f "$output_file" ]; then
-        echo "Uploading $output_file to ${username}/${model_name}-GGUF..."
-        # Assuming huggingface-cli tool has functionality to upload files directly
+        echo "Quantization successful. Uploading $output_file to ${username}/${model_name}-GGUF..."
         huggingface-cli repo upload "$output_file" --repo="${username}/${model_name}-GGUF"
-        echo "$output_file uploaded."
+        echo "$output_file uploaded successfully."
     else
         echo "Failed to quantize or upload $output_file."
     fi
 done
+
+echo "All processes completed."
