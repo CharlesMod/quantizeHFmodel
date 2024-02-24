@@ -1,7 +1,7 @@
 # quantizeHFmodel
 Accepts Hugging Face models, and automatically downloads and quantizes it. This process can be done entirely with CPU and RAM with acceptable performance. 
 
-Generates q4_k_m","q5_k_m", "q8_0" by default.
+Generates q4_k_m,q5_k_m, q8_0 by default.
 
 Remember to export your Hugging Face Token like so:
 ```
