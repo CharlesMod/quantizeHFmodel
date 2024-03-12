@@ -1,5 +1,5 @@
 # quantizeHFmodel
-Accepts Hugging Face models, and automatically downloads and quantizes it. This process can be done entirely with CPU and RAM with acceptable performance. (About 10 minutes to quantize a 90GB model for me.)
+Accepts Hugging Face models, and automatically downloads and quantizes it with Bits And Bytes (BNB). This process can be done entirely with CPU and RAM with acceptable performance. (About 10 minutes to quantize a 90GB model for me.)
 
 Generates q4_k_m, q5_k_m, q8_0 by default.
 
